@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="onNavigatingTo" class="page">
+    <ActionBar title="Quick Match" class="action-bar">
+        <NavigationButton visibility="visible" />
+    </ActionBar>
+
+    <GridLayout rows="auto, auto, *">
+        <!-- Game Selection -->
+        <StackLayout row="0" class="p-4 bg-white border-b border-gray-200">
+            <Label text="Select Game" class="text-lg font-bold mb-2" />
+            <GridLayout columns="*, *, *" class="mb-4">
+                <Button col="0" text="Fortnite" tap="{{ selectGame }}" 
+                        class="{{ selectedGame === 'Fortnite' ? 'btn-primary' : 'btn-secondary' }} m-1" />
+                <Button col="1" text="FIFA" tap="{{ selectGame }}" 
+                        class="{{ selectedGame === 'FIFA' ? 'btn-primary' : 'btn-secondary' }} m-1" />
+                <Button col="2" text="COD" tap="{{ selectGame }}" 
+                        class="{{ selectedGame === 'COD' ? 'btn-primary' : 'btn-secondary' }} m-1" />
+            </GridLayout>
+
+            <Label text="Entry Fee" class="text-lg font-bold mb-2" />
+            <GridLayout columns="*, *, *" class="mb-4">
+                <Button col="0" text="$1" tap="{{ selectFee }}" 
+                        class="{{ entryFee === 1 ? 'btn-primary' : 'btn-secondary' }} m-1" />
+                <Button col="1" text="$5" tap="{{ selectFee }}" 
+                        class="{{ entryFee === 5 ? 'btn-primary' : 'btn-secondary' }} m-1" />
+                <Button col="2" text="$10" tap="{{ selectFee }}" 
+                        class="{{ entryFee === 10 ? 'btn-primary' : 'btn-secondary' }} m-1" />
+            </GridLayout>
+        </StackLayout>
+
+        <!-- Search Status -->
+        <StackLayout row="1" class="p-4 bg-white border-b border-gray-200" 
+                     visibility="{{ isSearching ? 'visible' : 'collapsed' }}">
+            <ActivityIndicator busy="true" class="m-2" />
+            <Label text="Searching for opponent..." class="text-center text-gray-600" />
+            <Label text="{{ 'Expanding skill range: ±' + currentSkillRange }}" class="text-center text-sm text-gray-500" />
+            <Label text="{{ searchTimeLeft }}" class="text-center text-sm text-gray-500" />
+        </StackLayout>
+
+        <!-- Match Found -->
+        <StackLayout row="1" class="p-4 bg-white border-b border-gray-200" 
+                     visibility="{{ matchFound ? 'visible' : 'collapsed' }}">
+            <Label text="Match Found!" class="text-xl font-bold text-center text-green-600 mb-2" />
+            <Label text="{{ 'Opponent: ' + opponent.username }}" class="text-center mb-1" />
+            <Label text="{{ 'Rating: ' + opponent.rating }}" class="text-center text-gray-600" />
+        </StackLayout>
+
+        <!-- Action Button -->
+        <StackLayout row="2" class="p-4">
+            <Button text="{{ isSearching ? 'Cancel Search' : 'Find Match' }}" 
+                    tap="{{ toggleSearch }}" 
+                    class="{{ isSearching ? 'btn-danger' : 'btn-primary' }}"
+                    isEnabled="{{ selectedGame && entryFee > 0 }}" />
+        </StackLayout>
+    </GridLayout>
+</Page>

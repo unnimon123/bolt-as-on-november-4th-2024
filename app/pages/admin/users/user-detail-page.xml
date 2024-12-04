@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="onNavigatingTo" class="page">
+    <ActionBar title="User Details" class="action-bar">
+        <NavigationButton visibility="visible" />
+        <ActionItem tap="{{ editUser }}" ios.position="right" android.position="actionBar">
+            <Label text="Edit" class="text-white" />
+        </ActionItem>
+    </ActionBar>
+
+    <ScrollView>
+        <StackLayout class="p-4">
+            <!-- User Profile -->
+            <StackLayout class="card">
+                <Image src="{{ user.avatar_url || '~/assets/default-avatar.png' }}" 
+                       class="w-24 h-24 rounded-full mb-4 mx-auto" />
+                <Label text="{{ user.username }}" class="text-xl font-bold text-center" />
+                <Label text="{{ user.email }}" class="text-gray-600 text-center mb-4" />
+                <GridLayout columns="*, *" class="mb-4">
+                    <Label col="0" text="Status" class="text-gray-600" />
+                    <Label col="1" text="{{ user.is_online ? 'Online' : 'Offline' }}" 
+                           class="{{ 'badge ' + (user.is_online ? 'badge-success' : 'badge-secondary') }}" />
+                </GridLayout>
+                <GridLayout columns="*, *" class="mb-4">
+                    <Label col="0" text="Account Balance" class="text-gray-600" />
+                    <Label col="1" text="{{ user.wallet_balance | currency }}" class="font-bold" />
+                </GridLayout>
+                <GridLayout columns="*, *" class="mb-4">
+                    <Label col="0" text="Member Since" class="text-gray-600" />
+                    <Label col="1" text="{{ user.created_at | date }}" />
+                </GridLayout>
+            </StackLayout>
+
+            <!-- Statistics -->
+            <Label text="Statistics" class="text-lg font-bold mt-4 mb-2" />
+            <GridLayout columns="*, *" rows="auto, auto" class="card">
+                <StackLayout col="0" row="0" class="text-center p-2">
+                    <Label text="{{ stats.totalMatches }}" class="text-xl font-bold" />
+                    <Label text="Matches" class="text-sm text-gray-600" />
+                </StackLayout>
+                <StackLayout col="1" row="0" class="text-center p-2">
+                    <Label text="{{ stats.winRate }}%" class="text-xl font-bold" />
+                    <Label text="Win Rate" class="text-sm text-gray-600" />
+                </StackLayout>
+                <StackLayout col="0" row="1" class="text-center p-2">
+                    <Label text="{{ stats.tournamentsWon }}" class="text-xl font-bold" />
+                    <Label text="Tournaments Won" class="text-sm text-gray-600" />
+                </StackLayout>
+                <StackLayout col="1" row="1" class="text-center p-2">
+                    <Label text="{{ stats.totalEarnings | currency }}" class="text-xl font-bold" />
+                    <Label text="Total Earnings" class="text-sm text-gray-600" />
+                </StackLayout>
+            </GridLayout>
+
+            <!-- Recent Activity -->
+            <Label text="Recent Activity" class="text-lg font-bold mt-4 mb-2" />
+            <ListView items="{{ recentActivity }}" height="200" class="card">
+                <ListView.itemTemplate>
+                    <GridLayout columns="auto, *, auto" class="p-2">
+                        <Label col="0" text="{{ icon }}" class="text-2xl mr-2" />
+                        <Label col="1" text="{{ description }}" textWrap="true" />
+                        <Label col="2" text="{{ timestamp | timeAgo }}" class="text-sm text-gray-500" />
+                    </GridLayout>
+                </ListView.itemTemplate>
+            </ListView>
+
+            <!-- Actions -->
+            <Button text="{{ user.is_suspended ? 'Unsuspend User' : 'Suspend User' }}" 
+                    tap="{{ toggleSuspension }}" 
+                    class="{{ user.is_suspended ? 'btn btn-success' : 'btn btn-warning' }} mt-4" />
+            <Button text="Delete User" 
+                    tap="{{ deleteUser }}" 
+                    class="btn btn-danger mt-2" />
+        </StackLayout>
+    </ScrollView>
+</Page>

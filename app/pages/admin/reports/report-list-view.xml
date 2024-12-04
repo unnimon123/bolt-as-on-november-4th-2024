@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<GridLayout rows="auto, *">
+    <!-- Filters -->
+    <GridLayout row="0" columns="*, *, *" class="p-2 bg-white border-b border-gray-200">
+        <Button col="0" text="All" tap="{{ filterByStatus }}" 
+                class="{{ selectedFilter === 'all' ? 'btn-primary' : 'btn-secondary' }} m-1" />
+        <Button col="1" text="Pending" tap="{{ filterByStatus }}" 
+                class="{{ selectedFilter === 'pending' ? 'btn-primary' : 'btn-secondary' }} m-1" />
+        <Button col="2" text="High Priority" tap="{{ filterByPriority }}" 
+                class="{{ selectedFilter === 'high' ? 'btn-primary' : 'btn-secondary' }} m-1" />
+    </GridLayout>
+
+    <!-- Reports List -->
+    <ListView row="1" items="{{ reports }}" itemTap="{{ onReportTap }}">
+        <ListView.itemTemplate>
+            <GridLayout columns="*, auto" rows="auto, auto, auto" class="p-4 bg-white border-b border-gray-200">
+                <Label col="0" row="0" text="{{ type }}" class="font-bold" />
+                <Label col="1" row="0" text="{{ status }}" 
+                       class="{{ 'badge badge-' + (status === 'pending' ? 'warning' : 'success') }}" />
+                
+                <Label col="0" row="1" text="{{ description }}" textWrap="true" class="text-gray-600" />
+                
+                <GridLayout col="0" row="2" columns="auto, auto" class="mt-2">
+                    <Label col="0" text="{{ reporter.username }}" class="text-sm text-blue-600" />
+                    <Label col="1" text="{{ created_at | timeAgo }}" class="text-sm text-gray-500 ml-2" />
+                </GridLayout>
+                
+                <Label col="1" row="2" text="{{ priority }}" 
+                       class="{{ 'badge badge-' + (priority === 'high' ? 'danger' : 'secondary') }}" />
+            </GridLayout>
+        </ListView.itemTemplate>
+    </ListView>
+</GridLayout>

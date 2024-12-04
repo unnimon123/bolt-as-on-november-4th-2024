@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="onNavigatingTo" class="page">
+    <ActionBar title="Create Tournament" class="action-bar">
+        <NavigationButton visibility="visible" />
+    </ActionBar>
+
+    <ScrollView>
+        <StackLayout class="p-4">
+            <!-- Basic Info -->
+            <Label text="Tournament Details" class="text-xl font-bold mb-4" />
+            <TextField text="{{ title }}" 
+                      hint="Tournament Title" 
+                      class="input mb-2" />
+
+            <!-- Game Selection -->
+            <Label text="Game Type" class="font-bold mb-2" />
+            <GridLayout columns="*, *, *" class="mb-4">
+                <Button col="0" text="Fortnite" tap="{{ selectGame }}" 
+                        class="{{ gameType === 'Fortnite' ? 'btn-primary' : 'btn-secondary' }} m-1" />
+                <Button col="1" text="FIFA" tap="{{ selectGame }}" 
+                        class="{{ gameType === 'FIFA' ? 'btn-primary' : 'btn-secondary' }} m-1" />
+                <Button col="2" text="COD" tap="{{ selectGame }}" 
+                        class="{{ gameType === 'COD' ? 'btn-primary' : 'btn-secondary' }} m-1" />
+            </GridLayout>
+
+            <!-- Tournament Settings -->
+            <GridLayout columns="*, *" rows="auto, auto, auto" class="mb-4">
+                <Label col="0" row="0" text="Entry Fee ($)" class="font-bold" />
+                <TextField col="1" row="0" text="{{ entryFee }}" 
+                          keyboardType="number" 
+                          class="input" />
+
+                <Label col="0" row="1" text="Max Players" class="font-bold" />
+                <TextField col="1" row="1" text="{{ maxParticipants }}" 
+                          keyboardType="number" 
+                          class="input" />
+
+                <Label col="0" row="2" text="Start Time" class="font-bold" />
+                <DateTimePicker col="1" row="2" 
+                               date="{{ startTime }}" 
+                               class="mb-4" />
+            </GridLayout>
+
+            <!-- Participant Selection -->
+            <Label text="Select Participants" class="text-xl font-bold mb-4" />
+            <SearchBar hint="Search players..." text="{{ searchQuery }}" 
+                      submit="{{ searchPlayers }}" 
+                      clear="{{ clearSearch }}" 
+                      class="mb-2" />
+
+            <ListView items="{{ availablePlayers }}" class="mb-4" height="200">
+                <ListView.itemTemplate>
+                    <GridLayout columns="auto, *, auto" class="p-2">
+                        <Image col="0" src="{{ avatar_url || '~/assets/default-avatar.png' }}" 
+                               class="w-10 h-10 rounded-full" />
+                        <StackLayout col="1" class="ml-2">
+                            <Label text="{{ username }}" class="font-bold" />
+                            <Label text="{{ 'Rating: ' + rating }}" class="text-sm text-gray-600" />
+                        </StackLayout>
+                        <CheckBox col="2" checked="{{ isSelected }}" 
+                                 tap="{{ $parents['ListView'].togglePlayerSelection }}" />
+                    </GridLayout>
+                </ListView.itemTemplate>
+            </ListView>
+
+            <!-- Selected Players -->
+            <Label text="Selected Players" class="font-bold mb-2" />
+            <ListView items="{{ selectedPlayers }}" height="150" class="mb-4">
+                <ListView.itemTemplate>
+                    <GridLayout columns="*, auto" class="p-2">
+                        <Label col="0" text="{{ username }}" />
+                        <Button col="1" text="Remove" 
+                                tap="{{ $parents['ListView'].removePlayer }}" 
+                                class="btn btn-danger-outline" />
+                    </GridLayout>
+                </ListView.itemTemplate>
+            </ListView>
+
+            <!-- Create Button -->
+            <Button text="Create Tournament" 
+                    tap="{{ createTournament }}" 
+                    class="btn btn-primary"
+                    isEnabled="{{ isValid }}" />
+        </StackLayout>
+    </ScrollView>
+</Page>

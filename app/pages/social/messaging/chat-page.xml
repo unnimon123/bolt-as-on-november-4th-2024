@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="onNavigatingTo" class="page">
+    <ActionBar class="action-bar">
+        <NavigationButton visibility="visible" />
+        <GridLayout columns="auto, *">
+            <Image col="0" 
+                   src="{{ otherUser.avatar_url || '~/assets/default-avatar.png' }}" 
+                   class="w-8 h-8 rounded-full" />
+            <Label col="1" 
+                   text="{{ otherUser.username }}" 
+                   class="text-white font-bold ml-2" />
+        </GridLayout>
+    </ActionBar>
+
+    <GridLayout rows="*, auto">
+        <!-- Messages List -->
+        <ListView row="0" items="{{ messages }}" class="chat-messages">
+            <ListView.itemTemplate>
+                <GridLayout columns="*" class="p-2">
+                    <StackLayout class="{{ isCurrentUser ? 'ml-auto bg-blue-500 text-white' : 'mr-auto bg-gray-200' }} rounded-lg p-3 max-w-3/4">
+                        <Label text="{{ message }}" textWrap="true" />
+                        <Label text="{{ timeAgo }}" class="text-xs opacity-70" />
+                    </StackLayout>
+                </GridLayout>
+            </ListView.itemTemplate>
+        </ListView>
+
+        <!-- Message Input -->
+        <GridLayout row="1" columns="*, auto" class="p-2 bg-white border-t border-gray-200">
+            <TextField col="0" 
+                      text="{{ messageText }}" 
+                      hint="Type a message..." 
+                      class="input m-0" 
+                      returnKeyType="send" />
+            <Button col="1" 
+                    text="Send" 
+                    tap="{{ sendMessage }}" 
+                    class="btn btn-primary ml-2" />
+        </GridLayout>
+    </GridLayout>
+</Page>

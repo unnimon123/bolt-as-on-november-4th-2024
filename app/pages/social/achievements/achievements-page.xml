@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="onNavigatingTo" class="page">
+    <ActionBar title="Achievements" class="action-bar" />
+    
+    <GridLayout rows="auto, *">
+        <!-- Progress Overview -->
+        <GridLayout row="0" columns="*, *, *" class="p-4 bg-white border-b border-gray-200">
+            <StackLayout col="0" class="text-center">
+                <Label text="{{ totalAchievements }}" class="text-2xl font-bold text-blue-600" />
+                <Label text="Total" class="text-sm text-gray-600" />
+            </StackLayout>
+            <StackLayout col="1" class="text-center">
+                <Label text="{{ completedAchievements }}" class="text-2xl font-bold text-green-600" />
+                <Label text="Completed" class="text-sm text-gray-600" />
+            </StackLayout>
+            <StackLayout col="2" class="text-center">
+                <Label text="{{ totalPoints }}" class="text-2xl font-bold text-purple-600" />
+                <Label text="Points" class="text-sm text-gray-600" />
+            </StackLayout>
+        </GridLayout>
+
+        <!-- Achievements List -->
+        <ListView row="1" items="{{ achievements }}" class="achievement-list">
+            <ListView.itemTemplate>
+                <GridLayout columns="auto, *, auto" class="p-4 bg-white border-b border-gray-200">
+                    <Label col="0" 
+                           text="{{ icon }}" 
+                           class="text-2xl mr-4" />
+                    
+                    <StackLayout col="1">
+                        <Label text="{{ title }}" class="font-bold" />
+                        <Label text="{{ description }}" class="text-gray-600 text-sm" textWrap="true" />
+                        <GridLayout columns="*, auto" class="mt-2">
+                            <Progress col="0" value="{{ progress }}" maxValue="100" class="progress" />
+                            <Label col="1" text="{{ progress + '%' }}" class="text-xs text-gray-500 ml-2" />
+                        </GridLayout>
+                    </StackLayout>
+                    
+                    <StackLayout col="2" class="text-right">
+                        <Label text="{{ points + ' pts' }}" class="text-sm font-bold" />
+                        <Label text="{{ isCompleted ? '✓' : '' }}" 
+                               class="text-green-500 text-lg" 
+                               visibility="{{ isCompleted ? 'visible' : 'collapsed' }}" />
+                    </StackLayout>
+                </GridLayout>
+            </ListView.itemTemplate>
+        </ListView>
+    </GridLayout>
+</Page>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<GridLayout rows="auto, *" class="tournament-list">
+    <!-- Filters -->
+    <GridLayout row="0" columns="*, *, *, *" class="filter-bar p-2">
+        <Button col="0" text="All" tap="{{ filterByStatus }}" 
+                class="{{ selectedFilter === 'all' ? 'btn-primary' : 'btn-secondary' }} m-1" />
+        <Button col="1" text="Upcoming" tap="{{ filterByStatus }}" 
+                class="{{ selectedFilter === 'upcoming' ? 'btn-primary' : 'btn-secondary' }} m-1" />
+        <Button col="2" text="Live" tap="{{ filterByStatus }}" 
+                class="{{ selectedFilter === 'live' ? 'btn-primary' : 'btn-secondary' }} m-1" />
+        <Button col="3" text="Completed" tap="{{ filterByStatus }}" 
+                class="{{ selectedFilter === 'completed' ? 'btn-primary' : 'btn-secondary' }} m-1" />
+    </GridLayout>
+
+    <!-- Tournament List -->
+    <ListView row="1" items="{{ tournaments }}" itemTap="{{ onTournamentTap }}" class="tournament-list">
+        <ListView.itemTemplate>
+            <GridLayout columns="*, auto" rows="auto, auto, auto" class="tournament-item p-4">
+                <Label col="0" row="0" text="{{ title }}" class="text-lg font-bold" />
+                <Label col="1" row="0" text="{{ status }}" class="{{ 'badge badge-' + statusClass }}" />
+                
+                <StackLayout col="0" row="1" orientation="horizontal" class="mt-2">
+                    <Label text="{{ game_type }}" class="text-sm text-gray-600" />
+                    <Label text=" • " class="text-sm text-gray-600" />
+                    <Label text="{{ start_time | dateTime }}" class="text-sm text-gray-600" />
+                </StackLayout>
+                
+                <GridLayout col="0" row="2" columns="auto, auto, auto" class="mt-2">
+                    <Label col="0" text="{{ 'Players: ' + current_participants + '/' + max_participants }}" 
+                           class="text-sm text-blue-600" />
+                    <Label col="1" text="{{ '  Prize: $' + prize_pool }}" 
+                           class="text-sm text-green-600" />
+                    <Label col="2" text="{{ '  Entry: $' + entry_fee }}" 
+                           class="text-sm text-gray-600" />
+                </GridLayout>
+                
+                <Button col="1" row="2" text="⋮" 
+                        class="text-xl text-gray-600" 
+                        tap="{{ $parents['ListView'].showTournamentActions }}" />
+            </GridLayout>
+        </ListView.itemTemplate>
+    </ListView>
+</GridLayout>

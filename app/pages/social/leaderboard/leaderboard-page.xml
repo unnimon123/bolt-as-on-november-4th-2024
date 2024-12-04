@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="onNavigatingTo" class="page">
+    <ActionBar title="Leaderboard" class="action-bar" />
+    
+    <GridLayout rows="auto, *">
+        <!-- Category Selection -->
+        <GridLayout row="0" columns="*, *, *" class="p-2 bg-white border-b border-gray-200">
+            <Button col="0" text="Rating" 
+                    tap="{{ selectCategory }}" 
+                    class="{{ selectedCategory === 'rating' ? 'btn-primary' : 'btn-secondary' }} m-1" />
+            <Button col="1" text="Wins" 
+                    tap="{{ selectCategory }}" 
+                    class="{{ selectedCategory === 'wins' ? 'btn-primary' : 'btn-secondary' }} m-1" />
+            <Button col="2" text="Earnings" 
+                    tap="{{ selectCategory }}" 
+                    class="{{ selectedCategory === 'earnings' ? 'btn-primary' : 'btn-secondary' }} m-1" />
+        </GridLayout>
+
+        <!-- Leaderboard List -->
+        <ListView row="1" items="{{ leaderboard }}" class="leaderboard-list">
+            <ListView.itemTemplate>
+                <GridLayout columns="auto, auto, *, auto" class="p-4 bg-white border-b border-gray-200">
+                    <Label col="0" 
+                           text="{{ rank }}" 
+                           class="font-bold text-lg w-12 text-center" />
+                    
+                    <Image col="1" 
+                           src="{{ avatar_url || '~/assets/default-avatar.png' }}" 
+                           class="w-12 h-12 rounded-full mx-4" />
+                    
+                    <StackLayout col="2">
+                        <Label text="{{ username }}" class="font-bold" />
+                        <Label text="{{ score }}" class="text-gray-600" />
+                    </StackLayout>
+                    
+                    <StackLayout col="3" class="text-right">
+                        <Label text="{{ change >= 0 ? '↑' : '↓' }}" 
+                               class="{{ change >= 0 ? 'text-green-500' : 'text-red-500' }}" />
+                        <Label text="{{ Math.abs(change) }}" 
+                               class="text-xs" 
+                               visibility="{{ change !== 0 ? 'visible' : 'collapsed' }}" />
+                    </StackLayout>
+                </GridLayout>
+            </ListView.itemTemplate>
+        </ListView>
+    </GridLayout>
+</Page>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<GridLayout rows="auto, auto, *" class="p-4">
+    <Label row="0" text="Report Match Dispute" class="text-xl font-bold mb-4" />
+    
+    <GridLayout row="1" rows="auto, auto, auto" class="bg-white rounded-lg p-4 mb-4">
+        <TextField row="0" 
+                  text="{{ reason }}" 
+                  hint="Describe the issue" 
+                  class="input mb-2" />
+        
+        <GridLayout row="1" columns="*, *" class="mb-2">
+            <Button col="0" text="Upload Evidence" 
+                    tap="{{ uploadEvidence }}" 
+                    class="btn btn-secondary m-1" />
+            <Label col="1" text="{{ evidenceFileName }}" 
+                   class="text-gray-600 m-2" 
+                   textWrap="true" />
+        </GridLayout>
+
+        <Button row="2" text="Submit Dispute" 
+                tap="{{ submitDispute }}" 
+                class="btn btn-danger" 
+                isEnabled="{{ isValid }}" />
+    </GridLayout>
+
+    <ScrollView row="2">
+        <StackLayout class="mt-4">
+            <Label text="Dispute Guidelines" class="font-bold mb-2" />
+            <Label text="• Submit within 30 minutes of match completion" class="text-gray-600" />
+            <Label text="• Provide clear evidence (screenshots/videos)" class="text-gray-600" />
+            <Label text="• Be specific about the issue" class="text-gray-600" />
+            <Label text="• False reports may result in penalties" class="text-gray-600" />
+        </StackLayout>
+    </ScrollView>
+</GridLayout>

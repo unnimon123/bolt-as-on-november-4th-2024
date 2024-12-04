@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<GridLayout rows="auto, auto" class="p-4">
+    <GridLayout row="0" columns="*, *, *" class="mb-4">
+        <Button col="0" text="Start" 
+                tap="{{ startTournament }}" 
+                class="btn btn-success m-1" 
+                isEnabled="{{ canStart }}" />
+        <Button col="1" text="Pause" 
+                tap="{{ pauseTournament }}" 
+                class="btn btn-warning m-1" 
+                isEnabled="{{ canPause }}" />
+        <Button col="2" text="Cancel" 
+                tap="{{ cancelTournament }}" 
+                class="btn btn-danger m-1" 
+                isEnabled="{{ canCancel }}" />
+    </GridLayout>
+
+    <StackLayout row="1" class="bg-white rounded-lg p-4">
+        <Label text="Tournament Status" class="font-bold mb-2" />
+        <GridLayout columns="auto, *" rows="auto, auto, auto" class="text-sm">
+            <Label col="0" row="0" text="Players:" class="text-gray-600" />
+            <Label col="1" row="0" text="{{ currentPlayers + '/' + maxPlayers }}" class="font-bold" />
+            
+            <Label col="0" row="1" text="Prize Pool:" class="text-gray-600" />
+            <Label col="1" row="1" text="{{ '$' + prizePool }}" class="font-bold text-green-600" />
+            
+            <Label col="0" row="2" text="Status:" class="text-gray-600" />
+            <Label col="1" row="2" text="{{ status }}" class="font-bold" />
+        </GridLayout>
+    </StackLayout>
+</GridLayout>

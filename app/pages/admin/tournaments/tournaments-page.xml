@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="onNavigatingTo" class="page">
+    <ActionBar title="Tournament Management" class="action-bar">
+        <NavigationButton visibility="visible" />
+        <ActionItem tap="{{ createTournament }}" ios.position="right" android.position="actionBar">
+            <Label text="+" class="text-2xl text-white" />
+        </ActionItem>
+    </ActionBar>
+
+    <GridLayout rows="auto, *">
+        <!-- Filters -->
+        <StackLayout row="0" class="p-2 bg-white border-b border-gray-200">
+            <FlexboxLayout class="justify-between">
+                <Button text="All" tap="{{ filterByStatus }}" class="btn-sm" />
+                <Button text="Upcoming" tap="{{ filterByStatus }}" class="btn-sm" />
+                <Button text="In Progress" tap="{{ filterByStatus }}" class="btn-sm" />
+                <Button text="Completed" tap="{{ filterByStatus }}" class="btn-sm" />
+            </FlexboxLayout>
+        </StackLayout>
+
+        <!-- Tournaments List -->
+        <ListView row="1" items="{{ tournaments }}" itemTap="{{ onTournamentTap }}">
+            <ListView.itemTemplate>
+                <GridLayout columns="*, auto" class="list-item">
+                    <StackLayout col="0">
+                        <Label text="{{ title }}" class="font-bold" />
+                        <Label text="{{ game_type }}" class="text-sm text-gray-600" />
+                        <FlexboxLayout>
+                            <Label text="{{ status }}" class="badge badge-primary" />
+                            <Label text="{{ current_participants + '/' + max_participants }}" 
+                                   class="badge badge-secondary ml-2" />
+                            <Label text="{{ '$' + prize_pool }}" class="badge badge-success ml-2" />
+                        </FlexboxLayout>
+                    </StackLayout>
+                    <Label col="1" 
+                           text="⋮" 
+                           class="text-2xl text-gray-600" 
+                           tap="{{ $parents['ListView'].showTournamentActions }}" />
+                </GridLayout>
+            </ListView.itemTemplate>
+        </ListView>
+    </GridLayout>
+</Page>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="onNavigatingTo" class="page">
+    <ActionBar title="Admin Dashboard" class="action-bar">
+        <NavigationButton visibility="visible" />
+    </ActionBar>
+
+    <GridLayout rows="auto, *">
+        <!-- Stats Overview -->
+        <GridLayout row="0" columns="*, *, *" class="p-4 bg-white border-b border-gray-200">
+            <StackLayout col="0" class="text-center">
+                <Label text="{{ activeTournaments }}" class="text-2xl font-bold text-blue-600" />
+                <Label text="Active Tournaments" class="text-sm text-gray-600" />
+            </StackLayout>
+            <StackLayout col="1" class="text-center">
+                <Label text="{{ activeUsers }}" class="text-2xl font-bold text-green-600" />
+                <Label text="Active Users" class="text-sm text-gray-600" />
+            </StackLayout>
+            <StackLayout col="2" class="text-center">
+                <Label text="{{ pendingDisputes }}" class="text-2xl font-bold text-red-600" />
+                <Label text="Pending Disputes" class="text-sm text-gray-600" />
+            </StackLayout>
+        </GridLayout>
+
+        <!-- Admin Actions -->
+        <ScrollView row="1">
+            <StackLayout class="p-4">
+                <!-- Quick Actions -->
+                <Label text="Quick Actions" class="text-lg font-bold mb-2" />
+                <GridLayout columns="*, *" rows="auto, auto" class="mb-4">
+                    <Button col="0" row="0" text="Manage Users" tap="{{ navigateToUsers }}" 
+                            class="btn btn-primary m-1" />
+                    <Button col="1" row="0" text="Manage Tournaments" tap="{{ navigateToTournaments }}" 
+                            class="btn btn-primary m-1" />
+                    <Button col="0" row="1" text="Handle Disputes" tap="{{ navigateToDisputes }}" 
+                            class="btn btn-primary m-1" />
+                    <Button col="1" row="1" text="View Reports" tap="{{ navigateToReports }}" 
+                            class="btn btn-primary m-1" />
+                </GridLayout>
+
+                <!-- Recent Activity -->
+                <Label text="Recent Activity" class="text-lg font-bold mb-2" />
+                <ListView items="{{ recentActivity }}" class="mb-4">
+                    <ListView.itemTemplate>
+                        <GridLayout columns="auto, *, auto" class="p-3 bg-white rounded-lg mb-2 shadow-sm">
+                            <Label col="0" text="{{ icon }}" class="text-2xl mr-2" />
+                            <StackLayout col="1">
+                                <Label text="{{ title }}" class="font-semibold" />
+                                <Label text="{{ description }}" class="text-sm text-gray-600" textWrap="true" />
+                            </StackLayout>
+                            <Label col="2" text="{{ timeAgo }}" class="text-xs text-gray-500" />
+                        </GridLayout>
+                    </ListView.itemTemplate>
+                </ListView>
+            </StackLayout>
+        </ScrollView>
+    </GridLayout>
+</Page>

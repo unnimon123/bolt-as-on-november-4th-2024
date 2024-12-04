@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<GridLayout rows="auto, *" class="p-4">
+    <!-- Key Metrics -->
+    <GridLayout row="0" columns="*, *, *" rows="auto, auto" class="mb-4">
+        <StackLayout col="0" row="0" class="text-center p-2 bg-blue-100 rounded-lg m-1">
+            <Label text="{{ totalUsers }}" class="text-2xl font-bold text-blue-600" />
+            <Label text="Total Users" class="text-sm text-gray-600" />
+        </StackLayout>
+        
+        <StackLayout col="1" row="0" class="text-center p-2 bg-green-100 rounded-lg m-1">
+            <Label text="{{ activeTournaments }}" class="text-2xl font-bold text-green-600" />
+            <Label text="Active Tournaments" class="text-sm text-gray-600" />
+        </StackLayout>
+        
+        <StackLayout col="2" row="0" class="text-center p-2 bg-purple-100 rounded-lg m-1">
+            <Label text="{{ '$' + totalRevenue }}" class="text-2xl font-bold text-purple-600" />
+            <Label text="Total Revenue" class="text-sm text-gray-600" />
+        </StackLayout>
+
+        <StackLayout col="0" row="1" class="text-center p-2 bg-yellow-100 rounded-lg m-1">
+            <Label text="{{ disputeRate + '%' }}" class="text-2xl font-bold text-yellow-600" />
+            <Label text="Dispute Rate" class="text-sm text-gray-600" />
+        </StackLayout>
+    </GridLayout>
+
+    <!-- Charts -->
+    <TabView row="1">
+        <TabView.items>
+            <TabViewItem title="User Growth">
+                <GridLayout>
+                    <WebView src="{{ userGrowthChartUrl }}" />
+                </GridLayout>
+            </TabViewItem>
+            
+            <TabViewItem title="Revenue">
+                <GridLayout>
+                    <WebView src="{{ revenueChartUrl }}" />
+                </GridLayout>
+            </TabViewItem>
+        </TabView.items>
+    </TabView>
+</GridLayout>

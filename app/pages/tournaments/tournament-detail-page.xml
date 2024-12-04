@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="onNavigatingTo" class="page">
+    <ActionBar title="Tournament Details" class="action-bar">
+        <NavigationButton visibility="{{ canGoBack ? 'visible' : 'collapsed' }}" />
+        <ActionItem ios:position="right" android:position="actionBar" tap="{{ toggleChat }}">
+            <Label text="💬" class="text-2xl text-white" />
+        </ActionItem>
+    </ActionBar>
+
+    <GridLayout rows="auto, *, auto">
+        <!-- Tournament Info -->
+        <StackLayout row="0" class="p-4 bg-white border-b border-gray-200">
+            <Label text="{{ tournament.title }}" class="text-2xl font-bold mb-2" />
+            <GridLayout columns="*, *" rows="auto, auto, auto" class="mb-4">
+                <Label col="0" row="0" text="Game:" class="text-gray-600" />
+                <Label col="1" row="0" text="{{ tournament.game_type }}" class="font-bold" />
+                
+                <Label col="0" row="1" text="Prize Pool:" class="text-gray-600" />
+                <Label col="1" row="1" text="{{ '$' + tournament.prize_pool }}" class="font-bold text-green-600" />
+                
+                <Label col="0" row="2" text="Status:" class="text-gray-600" />
+                <Label col="1" row="2" text="{{ tournament.status }}" class="font-bold" />
+            </GridLayout>
+
+            <GridLayout columns="*, *" class="mb-4">
+                <StackLayout col="0" class="text-center">
+                    <Label text="Players" class="text-gray-600" />
+                    <Label text="{{ tournament.current_participants + '/' + tournament.max_participants }}" class="font-bold" />
+                </StackLayout>
+                <StackLayout col="1" class="text-center">
+                    <Label text="Entry Fee" class="text-gray-600" />
+                    <Label text="{{ '$' + tournament.entry_fee }}" class="font-bold" />
+                </StackLayout>
+            </GridLayout>
+
+            <Button text="{{ isParticipant ? 'View Game IDs' : 'Join Tournament' }}" 
+                    tap="{{ isParticipant ? showGameIds : joinTournament }}" 
+                    class="btn btn-primary"
+                    isEnabled="{{ canJoin || isParticipant }}" />
+        </StackLayout>
+
+        <!-- Matches -->
+        <TabView row="1" selectedIndex="{{ selectedTabIndex }}">
+            <TabView.items>
+                <TabViewItem title="Matches">
+                    <ListView items="{{ matches }}" itemTap="{{ onMatchTap }}">
+                        <ListView.itemTemplate>
+                            <GridLayout columns="*, auto" class="p-4 bg-white border-b border-gray-200">
+                                <StackLayout col="0">
+                                    <Label text="{{ player1.username + ' vs ' + player2.username }}" class="font-bold" />
+                                    <Label text="{{ 'Round ' + round }}" class="text-gray-600" />
+                                    <Label text="{{ status }}" class="{{ 'badge badge-' + statusClass }}" />
+                                </StackLayout>
+                                <Label col="1" 
+                                       text="{{ score }}" 
+                                       class="font-bold" 
+                                       visibility="{{ score ? 'visible' : 'collapsed' }}" />
+                            </GridLayout>
+                        </ListView.itemTemplate>
+                    </ListView>
+                </TabViewItem>
+
+                <TabViewItem title="Participants">
+                    <ListView items="{{ participants }}">
+                        <ListView.itemTemplate>
+                            <GridLayout columns="*, auto" class="p-4 bg-white border-b border-gray-200">
+                                <Label col="0" text="{{ username }}" class="font-bold" />
+                                <Label col="1" text="{{ game_id }}" class="text-gray-600" 
+                                       visibility="{{ $parent.isParticipant ? 'visible' : 'collapsed' }}" />
+                            </GridLayout>
+                        </ListView.itemTemplate>
+                    </ListView>
+                </TabViewItem>
+            </TabView.items>
+        </TabView>
+
+        <!-- Chat Section (Initially Hidden) -->
+        <GridLayout row="2" rows="*, auto" class="chat-container" visibility="{{ isChatVisible ? 'visible' : 'collapsed' }}">
+            <ListView row="0" items="{{ chatMessages }}" class="chat-messages">
+                <ListView.itemTemplate>
+                    <StackLayout class="{{ isCurrentUser ? 'chat-message-right' : 'chat-message-left' }} p-2">
+                        <Label text="{{ username }}" class="text-xs text-gray-600" />
+                        <Label text="{{ message }}" class="chat-bubble" textWrap="true" />
+                    </StackLayout>
+                </ListView.itemTemplate>
+            </ListView>
+            <GridLayout row="1" columns="*, auto" class="p-2 bg-white border-t border-gray-200">
+                <TextField col="0" text="{{ chatMessage }}" hint="Type a message..." class="input m-0" />
+                <Button col="1" text="Send" tap="{{ sendChatMessage }}" class="btn btn-primary ml-2" />
+            </GridLayout>
+        </GridLayout>
+    </GridLayout>
+</Page>

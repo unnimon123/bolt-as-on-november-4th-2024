@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<GridLayout rows="*, auto" class="chat-container">
+    <ListView row="0" items="{{ messages }}" class="chat-messages">
+        <ListView.itemTemplate>
+            <StackLayout class="{{ isCurrentUser ? 'chat-message-right' : 'chat-message-left' }} p-2">
+                <Label text="{{ username }}" class="text-xs text-gray-600" />
+                <Label text="{{ message }}" class="chat-bubble" textWrap="true" />
+                <Label text="{{ timestamp | timeAgo }}" class="text-xs text-gray-500" />
+            </StackLayout>
+        </ListView.itemTemplate>
+    </ListView>
+    
+    <GridLayout row="1" columns="*, auto" class="p-2 bg-white border-t border-gray-200">
+        <TextField col="0" text="{{ messageText }}" hint="Type a message..." class="input m-0" />
+        <Button col="1" text="Send" tap="{{ sendMessage }}" class="btn btn-primary ml-2" />
+    </GridLayout>
+</GridLayout>

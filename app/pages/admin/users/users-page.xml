@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="onNavigatingTo" class="page">
+    <ActionBar title="User Management" class="action-bar">
+        <NavigationButton visibility="visible" />
+        <ActionItem tap="{{ refreshUsers }}" ios.position="right" android.position="actionBar">
+            <Label text="↻" class="text-2xl text-white" />
+        </ActionItem>
+    </ActionBar>
+
+    <GridLayout rows="auto, *">
+        <!-- Search and Filter -->
+        <GridLayout row="0" columns="*, auto" class="p-4 bg-white border-b border-gray-200">
+            <TextField col="0" 
+                      text="{{ searchQuery }}" 
+                      hint="Search users..." 
+                      class="input m-0 mr-2" />
+            <Button col="1" 
+                    text="Filter" 
+                    tap="{{ showFilters }}" 
+                    class="btn btn-secondary" />
+        </GridLayout>
+
+        <!-- Users List -->
+        <ListView row="1" items="{{ users }}" itemTap="{{ onUserTap }}">
+            <ListView.itemTemplate>
+                <GridLayout columns="auto, *, auto" class="list-item">
+                    <Image col="0" 
+                           src="{{ avatar_url || '~/assets/default-avatar.png' }}" 
+                           class="w-12 h-12 rounded-full mr-4" />
+                    <StackLayout col="1">
+                        <Label text="{{ username }}" class="font-bold" />
+                        <Label text="{{ email }}" class="text-sm text-gray-600" />
+                        <FlexboxLayout>
+                            <Label text="{{ status }}" 
+                                   class="{{ 'badge ' + (is_online ? 'badge-success' : 'badge-secondary') }}" />
+                            <Label text="{{ wallet_balance | currency }}" 
+                                   class="badge badge-primary ml-2" />
+                        </FlexboxLayout>
+                    </StackLayout>
+                    <Label col="2" 
+                           text="⋮" 
+                           class="text-2xl text-gray-600" 
+                           tap="{{ $parents['ListView'].showUserActions }}" />
+                </GridLayout>
+            </ListView.itemTemplate>
+        </ListView>
+    </GridLayout>
+</Page>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="onNavigatingTo" class="page">
+    <ActionBar title="Messages" class="action-bar">
+        <ActionItem tap="{{ startNewChat }}" ios.position="right" android.position="actionBar">
+            <Label text="+" class="text-2xl text-white" />
+        </ActionItem>
+    </ActionBar>
+
+    <GridLayout rows="auto, *">
+        <!-- Search Bar -->
+        <SearchBar row="0" 
+                   hint="Search conversations..." 
+                   text="{{ searchQuery }}"
+                   submit="{{ onSearch }}"
+                   clear="{{ onClearSearch }}"
+                   class="bg-white" />
+
+        <!-- Chat List -->
+        <ListView row="1" items="{{ conversations }}" itemTap="{{ onConversationTap }}">
+            <ListView.itemTemplate>
+                <GridLayout columns="auto, *, auto" class="p-4 border-b border-gray-200">
+                    <Image col="0" 
+                           src="{{ otherUser.avatar_url || '~/assets/default-avatar.png' }}" 
+                           class="w-12 h-12 rounded-full mr-4" />
+                    
+                    <StackLayout col="1">
+                        <Label text="{{ otherUser.username }}" class="font-bold" />
+                        <Label text="{{ lastMessage }}" class="text-gray-600 text-sm" textWrap="true" />
+                    </StackLayout>
+                    
+                    <StackLayout col="2" class="text-right">
+                        <Label text="{{ timeAgo }}" class="text-xs text-gray-500" />
+                        <Label text="{{ unreadCount }}" 
+                               class="bg-blue-500 text-white text-xs rounded-full px-2 py-1"
+                               visibility="{{ unreadCount > 0 ? 'visible' : 'collapsed' }}" />
+                    </StackLayout>
+                </GridLayout>
+            </ListView.itemTemplate>
+        </ListView>
+    </GridLayout>
+</Page>

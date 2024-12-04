@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="onNavigatingTo" class="page">
+    <ActionBar title="Challenge Players" class="action-bar">
+        <NavigationButton visibility="visible" />
+    </ActionBar>
+
+    <GridLayout rows="auto, *">
+        <!-- Search Bar -->
+        <GridLayout row="0" columns="*, auto" class="p-4 bg-white border-b border-gray-200">
+            <TextField col="0" text="{{ searchQuery }}" 
+                      hint="Search by Game ID or Username" 
+                      class="input m-0" />
+            <Button col="1" text="Search" 
+                    tap="{{ searchPlayers }}" 
+                    class="btn btn-primary ml-2" />
+        </GridLayout>
+
+        <!-- Player List -->
+        <ListView row="1" items="{{ players }}" class="player-list">
+            <ListView.itemTemplate>
+                <GridLayout columns="*, auto" class="p-4 bg-white border-b border-gray-200">
+                    <StackLayout col="0">
+                        <Label text="{{ username }}" class="font-bold" />
+                        <Label text="{{ game_id }}" class="text-gray-600" />
+                        <Label text="{{ 'Rating: ' + rating }}" class="text-sm text-gray-600" />
+                    </StackLayout>
+                    <Button col="1" text="Challenge" 
+                            tap="{{ $parents['ListView'].challengePlayer }}" 
+                            class="btn btn-primary" />
+                </GridLayout>
+            </ListView.itemTemplate>
+        </ListView>
+    </GridLayout>
+</Page>
